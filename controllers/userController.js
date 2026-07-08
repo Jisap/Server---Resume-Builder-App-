@@ -48,3 +48,37 @@ export const registerUser = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 }
+
+// POST: /api/users/login
+export const loginUser = async (req, res) => {
+  try {
+    const {
+      email,
+      password,
+    } = req.body;
+
+    const user = await User.findOne({ email })
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" })
+    }
+
+    const isMatch = user.comparePassword(password)
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid email or password" })
+    }
+
+    const token = generatedToken(user._id)
+    user.password = undefined;
+
+    res.status(200).json({
+      message: "User logged in successfully",
+      user,
+      token,
+
+    })
+
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
