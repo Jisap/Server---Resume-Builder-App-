@@ -1,11 +1,18 @@
 import User from "../models/User.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Resume from "../models/Resume.js";
 
 const generateToken = (userId) => {
   const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "7d" })
   return token
 }
+
+// 1. Usuario se registra     → backend crea user + devuelve token
+// 2. Frontend guarda token   → localStorage (o cookie)
+// 3. Usuario hace request    → frontend mete token en header
+// 4. Middleware valida       → verifica firma, extrae id
+// 5. Controlador responde    → usa req.userId para buscar en BD
 
 
 // POST : /api/users/register
@@ -100,6 +107,19 @@ export const getUserById = async (req, res) => {
     })
   } catch (error) {
     res.status(400).json({ message: error.message })
+  }
+}
+
+// Controller for gettin user resumes
+// GET: /api/users/resumes
+
+export const getUserResumes = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const resumes = await Resume.find({ userId });
+    res.status(200).json(resumes);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 }
 
