@@ -82,3 +82,25 @@ export const loginUser = async (req, res) => {
     res.status(400).json({ message: error.message })
   }
 }
+
+// GET: /api/users/:id
+export const getUserById = async (req, res) => {
+  try {
+    const id = req.userId
+    const user = await User.findById(id)
+    if (!user) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    user.password = undefined;
+
+    res.status(200).json({
+      message: "Login succesfull",
+      token,
+      user
+    })
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
