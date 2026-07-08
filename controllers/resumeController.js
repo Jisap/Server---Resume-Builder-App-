@@ -1,5 +1,5 @@
-import imagekit from "../config/imageKit";
-import Resume from "../models/Resume";
+import imagekit from "../config/imageKit.js";
+import Resume from "../models/Resume.js";
 import fs from "fs";
 
 
@@ -82,7 +82,7 @@ export const updateResume = async (req, res) => {
     let resumeDataCopy = JSON.parse(resumeData);
 
     if (image) {
-      const imageBufferData = fs.createReadStrea(image.path)
+      const imageBufferData = fs.createReadStream(image.path)
       const response = await imagekit.files.upload({
         file: imageBufferData,
         fileName: 'resume.png',
