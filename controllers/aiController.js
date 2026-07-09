@@ -83,33 +83,31 @@ export const uploadResume = async (req, res) => {
     const userPrompt = `extract data from this resume: ${resumeText}.
      Provide data in the following JSON format with no additional text before or after: 
       {
-        personalInfo: {
-        fullName: { type: String, default: "" },
-        jobTitle: { type: String, default: "" },
-        email: { type: String, default: "" },
-        phone: { type: String, default: "" },
-        location: { type: String, default: "" },
-        linkedin: { type: String, default: "" },
-        github: { type: String, default: "" },
-    },
-    education: [{
-        institution: { type: String, default: "" },
-        degree: { type: String, default: "" },
-        fieldOfStudy: { type: String, default: "" },
-        startDate: { type: String, default: "" },
-        endDate: { type: String, default: "" },
-    }],
-    experience: [{
-        company: { type: String, default: "" },
-        position: { type: String, default: "" },
-        startDate: { type: String, default: "" },
-        endDate: { type: String, default: "" },
-        description: { type: String, default: "" },
-    }],
-    skills: [{ type: String }],
-
-    }
-    `
+        "personalInfo": {
+          "fullName": "",
+          "jobTitle": "",
+          "email": "",
+          "phone": "",
+          "location": "",
+          "linkedin": "",
+          "github": ""
+        },
+        "education": [{
+          "institution": "",
+          "degree": "",
+          "fieldOfStudy": "",
+          "startDate": "",
+          "endDate": ""
+        }],
+        "experience": [{
+          "company": "",
+          "position": "",
+          "startDate": "",
+          "endDate": "",
+          "description": ""
+        }],
+        "skills": [""]
+      }`
 
     const response = await ai.chat.completions.create({
       model: process.env.OPENAI_MODEL,
