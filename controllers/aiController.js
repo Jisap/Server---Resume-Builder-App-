@@ -1,6 +1,6 @@
 
-import ai from "../config/ai";
-import Resume from "../models/Resume";
+import ai from "../config/ai.js";
+import Resume from "../models/Resume.js";
 
 // controller for enhancing a resume's profesional summary
 // POST: /api/ai/enhance-pro-sum
