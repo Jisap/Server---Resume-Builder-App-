@@ -1,11 +1,8 @@
 
-
-
-// controller for enhancing a resume's profesional summary
-
 import ai from "../config/ai";
 import Resume from "../models/Resume";
 
+// controller for enhancing a resume's profesional summary
 // POST: /api/ai/enhance-pro-sum
 export const enhanceProfesionalSummary = async (req, res) => {
   try {
