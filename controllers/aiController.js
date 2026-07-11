@@ -83,27 +83,34 @@ export const uploadResume = async (req, res) => {
     const userPrompt = `extract data from this resume: ${resumeText}.
      Provide data in the following JSON format with no additional text before or after: 
       {
-        "personalInfo": {
-          "fullName": "",
-          "jobTitle": "",
+        "personal_info": {
+          "full_name": "",
+          "profession": "",
           "email": "",
           "phone": "",
           "location": "",
           "linkedin": "",
-          "github": ""
+          "website": ""
         },
+        "professional_summary": "",
         "education": [{
           "institution": "",
           "degree": "",
-          "fieldOfStudy": "",
-          "startDate": "",
-          "endDate": ""
+          "field": "",
+          "graduation_date": "",
+          "gpa": ""
         }],
         "experience": [{
           "company": "",
           "position": "",
-          "startDate": "",
-          "endDate": "",
+          "start_date": "",
+          "end_date": "",
+          "description": "",
+          "is_current": false
+        }],
+        "project": [{
+          "name": "",
+          "type": "",
           "description": ""
         }],
         "skills": [""]

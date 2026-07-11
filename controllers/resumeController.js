@@ -97,17 +97,13 @@ export const updateResume = async (req, res) => {
       }
     }
 
-    // Evitamos que el cliente pueda sobreescribir campos sensibles/internos
-    // (userId, _id, createdAt, updatedAt) enviándolos en el payload.
-    // Posible fix: const { userId: _ignored, _id: __ignored, createdAt, updatedAt, ...safeUpdate } = resumeDataCopy;
+    // Eliminamos campos internos para que el cliente no pueda sobreescribirlos
+    const { userId: _u, _id: _i, createdAt, updatedAt, __v, ...safeUpdate } = resumeDataCopy;
 
     const resume = await Resume.findOneAndUpdate(
-      {
-        userId,
-        _id: resumeId
-      },
-      { $set: resumeDataCopy }, //fix: safeUpdate // Con $set, un update parcial como { public: true } solo toca ese campo y deja todo lo demás intacto
-      { new: true }
+      { userId, _id: resumeId },
+      { $set: safeUpdate },
+      { returnDocument: 'after' }
     )
 
     return res.status(200).json({ message: "Saved successfully", resume })
