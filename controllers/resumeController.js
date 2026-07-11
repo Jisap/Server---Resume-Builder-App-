@@ -79,7 +79,7 @@ export const updateResume = async (req, res) => {
     const userId = req.userId;
     const { resumeId, resumeData, removeBackground } = req.body;
     const image = req.file;
-    let resumeDataCopy = JSON.parse(resumeData);
+    let resumeDataCopy = typeof resumeData === 'string' ? JSON.parse(resumeData) : resumeData;
 
     if (image) {
       const imageBufferData = fs.createReadStream(image.path)
@@ -92,10 +92,12 @@ export const updateResume = async (req, res) => {
         }
       });
 
-      resumeDataCopy.personal_info.image = response.url;
+      if (resumeDataCopy && resumeDataCopy.personal_info) {
+        resumeDataCopy.personal_info.image = response.url;
+      }
     }
 
-    const resume = await Resume.findByIdAndUpdate(
+    const resume = await Resume.findOneAndUpdate(
       {
         userId,
         _id: resumeId
