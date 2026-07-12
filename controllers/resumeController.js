@@ -1,6 +1,5 @@
 import imagekit from "../config/imageKit.js";
 import Resume from "../models/Resume.js";
-import fs from "fs";
 
 
 // Controller for creating a new resume
@@ -82,9 +81,8 @@ export const updateResume = async (req, res) => {
     let resumeDataCopy = typeof resumeData === 'string' ? JSON.parse(resumeData) : resumeData;
 
     if (image) {
-      const imageBufferData = fs.createReadStream(image.path)
       const response = await imagekit.files.upload({
-        file: imageBufferData,
+        file: image.buffer,
         fileName: 'resume.png',
         folder: 'user-resumes',
         transformation: {
