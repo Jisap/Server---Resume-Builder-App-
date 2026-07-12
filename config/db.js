@@ -19,6 +19,9 @@ const connectDB = async () => {
       throw new Error("MONGODB_URI is not defined in the env file");
     }
 
+    //  Si la cadena de conexión ya contiene parámetros de consulta (carácter ?),
+    //  se inserta correctamente el nombre de la base de datos (resume-builder) antes de los parámetros,
+    //  permitiendo que funcione sin problemas tanto con la URI clásica como con la versión SRV.
     let connectionString = mongodbURI;
     if (!mongodbURI.includes(projectName)) {
       if (mongodbURI.includes("?")) {
